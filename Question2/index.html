@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+    <script>
+        var v = 1;
+        var last = 0;
+        function my_event(x) {
+            if (x.id == "first") {
+                v = 1;
+                $.getJSON("https://xkcd.com/1/info.0.json", function (data) {
+                    document.getElementById("mytitle").innerHTML = data.title;
+                    document.getElementById("image").src = data.img;
+                });
+            }
+            else if (x.id == "prev") {
+                v--;
+                if (v < 1) {
+                    v = 1
+                    return;
+                };
+                var url = "https://xkcd.com/" + v + "/info.0.json";
+                $.getJSON(url, function (data) {
+                    document.getElementById("mytitle").innerHTML = data.title;
+                    document.getElementById("image").src = data.img;
+                });
+            }
+            else if (x.id == "random") {
+                v = Math.floor((Math.random() * last)) + 1;
+                var url = "https://xkcd.com/" + v + "/info.0.json";
+                $.getJSON(url, function (data) {
+                    document.getElementById("mytitle").innerHTML = data.title;
+                    document.getElementById("image").src = data.img;
+                });
+            }
+            else if (x.id == "next") {
+                v++;
+                if (v > last ) {
+                    v = last
+                    return;
+                };
+                var url = "https://xkcd.com/" + v + "/info.0.json";
+                $.getJSON(url, function (data) {
+                    document.getElementById("mytitle").innerHTML = data.title;
+                    document.getElementById("image").src = data.img;
+                });
+            }
+            else if (x.id == "last") {
+                v = last;
+                $.getJSON("https://xkcd.com/info.0.json", function (data) {
+                    document.getElementById("mytitle").innerHTML = data.title;
+                    document.getElementById("image").src = data.img;
+                });
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        $.getJSON("https://xkcd.com/info.0.json", function (data) {
+            last = data.num;
+        });
+    </script>
+
+    <div class="container">
+        <br />
+        <div class="text-center">
+            <button class="btn" type="button" id="first" onclick="my_event(this)"> First </button>
+            <button class="btn" type="button" id="prev" onclick="my_event(this)"> Prev </button>
+            <button class="btn" type="button" id="random" onclick="my_event(this)">Random </button>
+            <button class="btn" type="button" id="next" onclick="my_event(this)"> Next > </button>
+            <button class="btn" type="button" id="last" onclick="my_event(this)"> Last </button>
+        </div>
+
+        <div class="text-center">
+            <h2 id="mytitle"> Barrel - Part 1 </h2>
+        </div>
+
+        <div class="text-center">
+            <img src="https://imgs.xkcd.com/comics/barrel_cropped_(1).jpg" alt="IMAGE" id="image">
+        </div>
+        <br />
+        <div class="text-center">
+            <button class="btn" type="button" id="first" onclick="my_event(this)"> First </button>
+            <button class="btn" type="button" id="prev" onclick="my_event(this)"> Prev </button>
+            <button class="btn" type="button" id="random" onclick="my_event(this)"> Random </button>
+            <button class="btn" type="button" id="next" onclick="my_event(this)"> Next > </button>
+            <button class="btn" type="button" id="last" onclick="my_event(this)"> Last </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+    <script>
+
+        function disable_func() {
+            document.getElementById("search_bar").disabled = true;
+        }
+
+        function enable_func() {
+            document.getElementById("search_bar").disabled = false;
+        }
+
+        function my_event() {
+            if (document.getElementById("by_name").checked) {
+                // alert("1");
+                var url = "https://anapioficeandfire.com/api/characters?name=";
+                let query = document.getElementById("search_bar").value;
+                if (query.length == 0) return;
+                url = url + query;
+                $.getJSON(url, function (data) {
+                    document.getElementById("res_name").innerHTML = data[0].name;
+                    document.getElementById("tableOfChar").style.display = "block";
+                    document.getElementById("tableOfHouses").style.display = "none";
+                    document.getElementById("aliases").innerHTML = data[0].aliases;
+                    document.getElementById("gender").innerHTML = data[0].gender;
+                    document.getElementById("titles").innerHTML = data[0].titles;
+                    document.getElementById("born").innerHTML = data[0].born;
+                    document.getElementById("died").innerHTML = data[0].died;
+                    document.getElementById("tvSeries").innerHTML = data[0].tvSeries;
+                    document.getElementById("playedBy").innerHTML = data[0].playedBy;
+
+                });
+            }
+            else if (document.getElementById("by_house").checked) {
+                var url = "https://anapioficeandfire.com/api/houses?name=";
+                let query = document.getElementById("search_bar").value;
+                if (query.length == 0) return;
+                url = url + query;
+                $.getJSON(url, function (data) {
+                    document.getElementById("res_name").innerHTML = data[0].name;
+                    document.getElementById("tableOfChar").style.display = "none";
+                    document.getElementById("tableOfHouses").style.display = "block";
+                    document.getElementById("region_h").innerHTML = data[0].region;
+                    document.getElementById("words_h").innerHTML = data[0].words;
+                    document.getElementById("titles_h").innerHTML = data[0].titles;
+                    document.getElementById("seats_h").innerHTML = data[0].seats;
+                    document.getElementById("founded_h").innerHTML = data[0].founded;
+                });
+            }
+            else if (document.getElementById("by_random_name").checked) {
+                var rnd_num = Math.floor(Math.random() * 2137) + 1;
+                var url = "https://anapioficeandfire.com/api/characters/" + rnd_num;
+                $.getJSON(url, function (data) {
+                    document.getElementById("res_name").innerHTML = data.name;
+                    document.getElementById("tableOfChar").style.display = "block";
+                    document.getElementById("tableOfHouses").style.display = "none";
+                    document.getElementById("aliases").innerHTML = data.aliases;
+                    document.getElementById("gender").innerHTML = data.gender;
+                    document.getElementById("titles").innerHTML = data.titles;
+                    document.getElementById("born").innerHTML = data.born;
+                    document.getElementById("died").innerHTML = data.died;
+                    document.getElementById("tvSeries").innerHTML = data.tvSeries;
+                    document.getElementById("playedBy").innerHTML = data.playedBy;
+                }).fail(
+                    function () {
+                        // alert("FAIL");
+                        my_event();
+                    }
+                );
+            }
+            else if (document.getElementById("by_random_house").checked) {
+                var rnd_num = Math.floor(Math.random() * 444) + 1;
+                var url = "https://anapioficeandfire.com/api/houses/" + rnd_num;
+                $.getJSON(url, function (data) {
+                    document.getElementById("res_name").innerHTML = data.name;
+                    document.getElementById("tableOfChar").style.display = "none";
+                    document.getElementById("tableOfHouses").style.display = "block";
+                    document.getElementById("region_h").innerHTML = data.region;
+                    document.getElementById("words_h").innerHTML = data.words;
+                    document.getElementById("titles_h").innerHTML = data.titles;
+                    document.getElementById("seats_h").innerHTML = data.seats;
+                    document.getElementById("founded_h").innerHTML = data.founded;
+                }).fail(
+                    function () {
+                        // alert("FAIL");
+                        my_event();
+                    }
+                );
+            }
+            else if (document.getElementById("by_random_char_in_given_house").checked) {
+                var url = "https://anapioficeandfire.com/api/houses?name=";
+                let query = document.getElementById("search_bar").value;
+                if (query.length == 0) return;
+                url = url + query;
+                var nextURL;
+                $.getJSON(url, function (data) {
+                    var tmp = data[0].swornMembers;
+                    var tmp_len = tmp.length;
+                    next_url_pos = Math.floor(Math.random() * tmp_len);
+                    nextURL = tmp[next_url_pos];
+                }).done(
+                    function () {
+                        $.getJSON(nextURL, function (data) {
+                            document.getElementById("res_name").innerHTML = data.name;
+                            document.getElementById("tableOfChar").style.display = "block";
+                            document.getElementById("tableOfHouses").style.display = "none";
+                            document.getElementById("aliases").innerHTML = data.aliases;
+                            document.getElementById("gender").innerHTML = data.gender;
+                            document.getElementById("titles").innerHTML = data.titles;
+                            document.getElementById("born").innerHTML = data.born;
+                            document.getElementById("died").innerHTML = data.died;
+                            document.getElementById("tvSeries").innerHTML = data.tvSeries;
+                            document.getElementById("playedBy").innerHTML = data.playedBy;
+                        });
+                    }
+                );
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <br />
+    <div class=" jumbotron container">
+
+        <div class="text-center ">
+            <h3> The Search of Ice and Fire </h3>
+        </div>
+        <br />
+        <div class="text-center">
+            <b> Search By : </b>
+            <input type="radio" name="search_by" id="by_name" onclick="enable_func()" checked> Character Name
+            <input type="radio" name="search_by" id="by_house" onclick="enable_func()"> House Name
+            <input type="radio" name="search_by" id="by_random_name" onclick="disable_func()"> Random Character
+            <input type="radio" name="search_by" id="by_random_house" onclick="disable_func()"> Random House
+            <input type="radio" name="search_by" id="by_random_char_in_given_house" onclick="enable_func()"> Random
+            char from given house
+        </div>
+
+        <br />
+
+        <div class="text-center">
+            <input type="search" id="search_bar" placeholder="Type here" size="70">
+            <button type="button" id="first" onclick="my_event()"> Search </button>
+        </div>
+
+        <br />
+
+    </div>
+    <br />
+    <div class="container">
+        <div class="text-left">
+            <h3 id="res_name"> </h3>
+        </div>
+        <br />
+        <center>
+            <table class="table table-striped " style="display:none;" id="tableOfChar">
+                <tr>
+                    <th> Also Known as : </th>
+                    <td>
+                        <span id="aliases">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Gender : </th>
+                    <td>
+                        <span id="gender">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Titles : </th>
+                    <td>
+                        <span id="titles">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Born : </th>
+                    <td>
+                        <span id="born">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Died : </th>
+                    <td>
+                        <span id="died">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Appeared in : </th>
+                    <td>
+                        <span id="tvSeries">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Played By : </th>
+                    <td>
+                        <span id="playedBy">
+                    </td>
+                </tr>
+
+            </table>
+        </center>
+
+        <center>
+            <table class="table table-striped" style="display:none;" id="tableOfHouses">
+                <tr>
+                    <th> Region : </th>
+                    <td>
+                        <span id="region_h">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Words : </th>
+                    <td>
+                        <span id="words_h">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Titles : </th>
+                    <td>
+                        <span id="titles_h">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Seats : </th>
+                    <td>
+                        <span id="seats_h">
+                    </td>
+                </tr>
+                <tr>
+                    <th> Founded : </th>
+                    <td>
+                        <span id="founded_h">
+                    </td>
+                </tr>
+            </table>
+        </center>
+
+    </div>
+    <br>
+</body>
+
+</html>
