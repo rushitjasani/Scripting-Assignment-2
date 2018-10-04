@@ -1,0 +1,144 @@
+<html>
+
+<head>
+
+    <style>
+        .web-clock {
+            height: 500px;
+            width: 500px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: #000000;
+            border-radius: 15%;
+            border: 5px solid whitesmoke;
+            margin: auto;
+            position: absolute;
+        }
+        .web-twelve,
+        .web-three,
+        .web-six,
+        .web-nine {
+            background: #ffffff;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .web-twelve,
+        .web-six,
+        .web-three,
+        .web-nine {
+            height: 10px;
+            width: 10px;
+            border-radius: 100%;
+        }
+
+        .web-center {
+            width: 10px;
+            height: 10px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            position: absolute;
+            margin: auto;
+            background: #6b7a26;
+            border-radius: 100%;
+        }
+
+        .web-twelve {
+            left: 49%;
+            top: 10px;
+        }
+
+        .web-three {
+            right: 10px;
+            top: 49%;
+        }
+
+        .web-six {
+            left: 49%;
+            bottom: 10px;
+        }
+
+        .web-nine {
+            left: 10px;
+            top: 49%;
+        }
+
+        #minutes {
+            position: absolute;
+            height: 160px;
+            left: 0;
+            right: 0;
+            bottom: 160px;
+            top: 0px;
+            width: 2px;
+            margin: auto;
+            background:whitesmoke;
+            -webkit-transform-origin: bottom;
+        }
+
+        #seconds {
+            position: absolute;
+            height: 200px;
+            width: 2px;
+            left: 0;
+            right: 0;
+            bottom: 200px;
+            top: 0px;
+            margin: auto;
+            background: whitesmoke;
+            -webkit-transform-origin: bottom;
+            background: #6b7a26;
+        }
+
+        #hours {
+            position: absolute;
+            height: 100px;
+            width: 4px;
+            left: 0;
+            right: 0;
+            bottom: 100px;
+            top: 0px;
+            margin: auto;
+            background:white;
+            -webkit-transform-origin: bottom;
+        }
+    </style>
+
+    <script>
+
+        function moveHands() {
+            with (new Date()) {
+                h = 30 * ((getHours() % 12) + getMinutes() / 60);
+                m = 6 * getMinutes();
+                s = 6 * getSeconds();
+                document.getElementById("seconds").style.cssText = "-webkit-transform:rotate(" + s + "deg);";
+                document.getElementById("minutes").style.cssText = "-webkit-transform:rotate(" + m + "deg);";
+                document.getElementById("hours").style.cssText   = "-webkit-transform:rotate(" + h + "deg);";
+                setTimeout(moveHands, 1000);
+            }
+        }
+        window.onload = moveHands;
+    </script>
+</head>
+
+<body>
+
+    <div class="web-clock">
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+        <div class="web-three"></div>
+        <div class="web-six"></div>
+        <div class="web-nine"></div>
+        <div class="web-twelve"></div>
+        <div class="web-center"></div>
+    </div>
+
+
+</body>
+
+</html>

@@ -10,14 +10,14 @@
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
     <script>
-        function clearcode() {
+        function cl_code() {
             document.getElementById("txtarea").value = " ";
         }
         function runcode() {
             var2 = document.getElementById("txtarea").value;
             document.getElementById("iframe").srcdoc = var2;
         }
-        function clearframe() {
+        function cl_frame() {
             document.getElementById("iframe").srcdoc = " ";
         }
     </script>
@@ -38,8 +38,8 @@
         </div>
         <div class="text-center">
             <button class="btn" id="run" onclick="runcode()"> Run </button>
-            <button class="btn" id="clearcode" onclick="clearcode()"> Clear </button>
-            <button class="btn" id="clearFeame" onclick="clearframe()">Clearframe</button>
+            <button class="btn" id="cl_code" onclick="cl_code()"> Clear </button>
+            <button class="btn" id="cl_frame" onclick="cl_frame()">Clearframe</button>
         </div>
 
     </div>
